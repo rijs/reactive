@@ -2,6 +2,7 @@
 "use strict";
 
 /* istanbul ignore next */
+/* istanbul ignore next */
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
 
 // -------------------------------------------
@@ -7072,6 +7073,7 @@ Library.prototype.test = function (obj, type) {
 "use strict";
 
 /* istanbul ignore next */
+/* istanbul ignore next */
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
 
 // -------------------------------------------
@@ -7175,6 +7177,7 @@ log = log("[ri/core]");
 },{"./types/text":42,"utilise/chainable":43,"utilise/colorfill":44,"utilise/emitterify":45,"utilise/err":46,"utilise/header":47,"utilise/identity":48,"utilise/is":50,"utilise/log":51,"utilise/objectify":103,"utilise/rebind":104,"utilise/values":105}],42:[function(require,module,exports){
 "use strict";
 
+/* istanbul ignore next */
 /* istanbul ignore next */
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
 
@@ -8225,6 +8228,7 @@ module.exports = require('values')
 },{"values":94}],106:[function(require,module,exports){
 "use strict";
 
+/* istanbul ignore next */
 /* istanbul ignore next */
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
 
