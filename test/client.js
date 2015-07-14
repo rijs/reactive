@@ -1,6 +1,6 @@
 var expect = require('chai').expect
-  , core = require('core')
-  , data = require('data')
+  , core = require('rijs.core')
+  , data = require('rijs.data')
   , react = require('../')
 
 describe('Reactive Data', function() {

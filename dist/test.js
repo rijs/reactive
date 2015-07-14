@@ -2,7 +2,6 @@
 "use strict";
 
 /* istanbul ignore next */
-/* istanbul ignore next */
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
 
 // -------------------------------------------
@@ -7073,7 +7072,6 @@ Library.prototype.test = function (obj, type) {
 "use strict";
 
 /* istanbul ignore next */
-/* istanbul ignore next */
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
 
 // -------------------------------------------
@@ -7177,7 +7175,6 @@ log = log("[ri/core]");
 },{"./types/text":42,"utilise/chainable":43,"utilise/colorfill":44,"utilise/emitterify":45,"utilise/err":46,"utilise/header":47,"utilise/identity":48,"utilise/is":50,"utilise/log":51,"utilise/objectify":103,"utilise/rebind":104,"utilise/values":105}],42:[function(require,module,exports){
 "use strict";
 
-/* istanbul ignore next */
 /* istanbul ignore next */
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
 
@@ -7667,7 +7664,7 @@ module['exports'] = function () {
           addProperty(prop, function () {
             var ret = this;
             for (var t = 0; t < theme[prop].length; t++) {
-              ret = exports[theme[prop][t]](ret);
+              ret = colors[theme[prop][t]](ret);
             }
             return ret;
           });
@@ -8229,7 +8226,6 @@ module.exports = require('values')
 "use strict";
 
 /* istanbul ignore next */
-/* istanbul ignore next */
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
 
 // -------------------------------------------
@@ -8425,8 +8421,8 @@ arguments[4][137][0].apply(exports,arguments)
 module.exports = require('str')
 },{"str":163}],167:[function(require,module,exports){
 var expect = require('chai').expect
-  , core = require('core')
-  , data = require('data')
+  , core = require('rijs.core')
+  , data = require('rijs.data')
   , react = require('../')
 
 describe('Reactive Data', function() {
@@ -8519,4 +8515,4 @@ describe('Reactive Data', function() {
   })
 
 })
-},{"../":1,"chai":7,"core":41,"data":106}]},{},[167]);
+},{"../":1,"chai":7,"rijs.core":41,"rijs.data":106}]},{},[167]);
