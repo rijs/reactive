@@ -1,5 +1,5 @@
 {
-  "name": "reactive",
+  "name": "rijs.reactive",
   "version": "0.0.0",
   "main": "dist",
   "author": "Pedram Emrouznejad (https://github.com/pemrouz)",
@@ -18,8 +18,8 @@
     "babel": "^4.6.3",
     "browserify": "^9.0.3",
     "chai": "^2.3.0",
-    "core": "git://github.com/rijs/core",
-    "data": "git://github.com/rijs/data",
+    "rijs.core": "git://github.com/rijs/core",
+    "rijs.data": "git://github.com/rijs/data",
     "coveralls": "^2.11.2",
     "istanbul": "^0.3.13",
     "mocha": "^2.2.4",
