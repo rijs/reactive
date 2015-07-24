@@ -4,7 +4,7 @@
   "main": "dist",
   "author": "Pedram Emrouznejad (https://github.com/pemrouz)",
   "scripts": {
-    "ignore": "find ./dist -type f -exec sed -i \"s/var _interopRequire/\\/* istanbul ignore next *\\/\\nvar _interopRequire/g\" {} ;",
+    "ignore": "find ./dist -type f -exec sed -i \"s/var _interopRequire/\\/* istanbul ignore next *\\/\\nvar _interopRequire/g\" {} \\;",
     "babel": "babel src -d dist",
     "bundle": "browserify dist/index.js -o dist/client.js",
     "clean": "rm -rf dist && mkdir dist",
