@@ -10,7 +10,7 @@
     "clean": "rm -rf dist && mkdir dist",
     "minify": "uglifyjs dist/client.js -m -c drop_console,dead_code -d debug=false -o dist/client.min.js",
     "build": "npm run clean && npm run babel && npm run ignore && npm run bundle && npm run minify",
-    "test": "browserify test/client.js -o dist/test.js && start test/index.html",
+    "test": "popper",
     "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && rm -rf ./coverage",
     "watch": "watch \"npm run build && npm test\" src/ test/"
   },
