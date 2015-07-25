@@ -4,15 +4,13 @@
   "main": "dist",
   "author": "Pedram Emrouznejad (https://github.com/pemrouz)",
   "scripts": {
-    "ignore": "find ./dist -type f -exec sed -i \"s/var _interopRequire/\\/* istanbul ignore next *\\/\\nvar _interopRequire/g\" {} \\;",
+    "ignore": "find ./dist -type f -exec sed -i \"s/var _interopRequire/\\/* istanbul ignore next *\\/\\nvar _interopRequire/g\" {} ';'",
     "babel": "babel src -d dist",
     "bundle": "browserify dist/index.js -o dist/client.js",
     "clean": "rm -rf dist && mkdir dist",
     "minify": "uglifyjs dist/client.js -m -c drop_console,dead_code -d debug=false -o dist/client.min.js",
     "build": "npm run clean && npm run babel && npm run ignore && npm run bundle && npm run minify",
-    "test": "popper",
-    "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && rm -rf ./coverage",
-    "watch": "watch \"npm run build && npm test\" src/ test/"
+    "test": "popper"
   },
   "license": "pemrouz.mit-license.org",
   "devDependencies": {
@@ -23,7 +21,7 @@
     "istanbul": "^0.3.13",
     "mocha": "^2.2.4",
     "mocha-lcov-reporter": "0.0.2",
-    "popper": "0.0.5",
+    "popper": "*",
     "rijs.core": "git://github.com/rijs/core",
     "rijs.data": "git://github.com/rijs/data",
     "uglify-js": "^2.4.16"
