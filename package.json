@@ -22,11 +22,11 @@
     "mocha": "^2.2.4",
     "mocha-lcov-reporter": "0.0.2",
     "popper": "*",
-    "rijs.core": "git://github.com/rijs/core",
-    "rijs.data": "git://github.com/rijs/data",
+    "rijs.core": "*",
+    "rijs.data": "*",
     "uglify-js": "^2.4.16"
   },
   "dependencies": {
-    "utilise": "git://github.com/utilise/utilise"
+    "utilise": "*"
   }
 }
