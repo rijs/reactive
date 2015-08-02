@@ -20,16 +20,19 @@ function react(ripple){
     )
     
     is.arr(res.body) 
-      && res.body.forEach(observe)
+      && res.body.forEach(observe(ripple)(res))
+  }
+}
 
-    function observe(d) {
+function observe(ripple) {
+  return res => {
+    return d => {
       if (!is.obj(d)) return
       if (d.observer) return
       var fn = child(ripple)(res)
       def(d, 'observer', fn)
       Object.observe(d, fn)
     }
-
   }
 }
 
@@ -37,10 +40,11 @@ function child(ripple) {
   return res => {
     return changes => {
       var key = res.body.indexOf(changes[0].object)
-        , value = res.body
+        , value = res.body[key]
         , type = 'update'
         , change = { key, value, type }
 
+      log('changed (c)'.green, res.name.bold, str(key).grey)
       ripple.emit('change', [res, change], not(is.in(['reactive'])))
     }
   }
@@ -52,6 +56,8 @@ function changed(ripple) {
       changes
         .map(normalize)
         .filter(Boolean)
+        .map(change => (log('changed (p)'.green, res.name.bold, change.key.grey), change))
+        .map(change => ((change.type == 'push' && observe(ripple)(res)(change.value)), change))
         .map(change => ripple.emit('change', [res, change], not(is.in(['reactive']))))
     }
   }

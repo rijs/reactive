@@ -23,17 +23,19 @@ function react(ripple) {
 
     Array.observe(res.body, def(res.body, "observer", changed(ripple)(res)));
 
-    is.arr(res.body) && res.body.forEach(observe);
+    is.arr(res.body) && res.body.forEach(observe(ripple)(res));
+  };
+}
 
-    function observe(d) {
-      if (!is.obj(d)) {
-        return;
-      }if (d.observer) {
-        return;
-      }var fn = child(ripple)(res);
+function observe(ripple) {
+  return function (res) {
+    return function (d) {
+      if (!is.obj(d)) return;
+      if (d.observer) return;
+      var fn = child(ripple)(res);
       def(d, "observer", fn);
       Object.observe(d, fn);
-    }
+    };
   };
 }
 
@@ -41,10 +43,11 @@ function child(ripple) {
   return function (res) {
     return function (changes) {
       var key = res.body.indexOf(changes[0].object),
-          value = res.body,
+          value = res.body[key],
           type = "update",
           change = { key: key, value: value, type: type };
 
+      log("changed (c)".green, res.name.bold, str(key).grey);
       ripple.emit("change", [res, change], not(is["in"](["reactive"])));
     };
   };
@@ -54,6 +57,10 @@ function changed(ripple) {
   return function (res) {
     return function (changes) {
       changes.map(normalize).filter(Boolean).map(function (change) {
+        return (log("changed (p)".green, res.name.bold, change.key.grey), change);
+      }).map(function (change) {
+        return (change.type == "push" && observe(ripple)(res)(change.value), change);
+      }).map(function (change) {
         return ripple.emit("change", [res, change], not(is["in"](["reactive"])));
       });
     };
