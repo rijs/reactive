@@ -40,7 +40,7 @@ function child(ripple) {
         , value = res.body
         , type = 'update'
         , change = { key, value, type }
-        
+
       ripple.emit('change', [res, change], not(is.in(['reactive'])))
     }
   }

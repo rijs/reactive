@@ -121,35 +121,19 @@ var is = _interopRequire(require("utilise/is"));
 
 log = log("[ri/reactive]");
 err = err("[ri/reactive]");
-},{"utilise/def":2,"utilise/err":3,"utilise/has":4,"utilise/header":5,"utilise/is":6,"utilise/keys":7,"utilise/log":8,"utilise/not":28,"utilise/str":29}],2:[function(require,module,exports){
-module.exports = require('def')
-},{"def":9}],3:[function(require,module,exports){
-module.exports = require('err')
-},{"err":11}],4:[function(require,module,exports){
-module.exports = require('has')
-},{"has":15}],5:[function(require,module,exports){
-module.exports = require('header')
-},{"header":16}],6:[function(require,module,exports){
-module.exports = require('is')
-},{"is":18}],7:[function(require,module,exports){
-module.exports = require('keys')
-},{"keys":19}],8:[function(require,module,exports){
-module.exports = require('log')
-},{"log":20}],9:[function(require,module,exports){
-var has = require('has')
+},{"utilise/def":3,"utilise/err":4,"utilise/has":5,"utilise/header":6,"utilise/is":7,"utilise/keys":8,"utilise/log":9,"utilise/not":10,"utilise/str":12}],2:[function(require,module,exports){
+module.exports = typeof window != 'undefined'
+},{}],3:[function(require,module,exports){
+var has = require('utilise/has')
 
 module.exports = function def(o, p, v, w){
   !has(o, p) && Object.defineProperty(o, p, { value: v, writable: w })
   return o[p]
 }
 
-},{"has":10}],10:[function(require,module,exports){
-module.exports = function has(o, k) {
-  return k in o
-}
-},{}],11:[function(require,module,exports){
-var owner = require('owner')
-  , to = require('to')
+},{"utilise/has":5}],4:[function(require,module,exports){
+var owner = require('utilise/owner')
+  , to = require('utilise/to')
 
 module.exports = function err(prefix){
   return function(d){
@@ -159,24 +143,12 @@ module.exports = function err(prefix){
     return console.error.apply(console, args), d
   }
 }
-},{"owner":12,"to":14}],12:[function(require,module,exports){
-(function (global){
-module.exports = require('client') ? /* istanbul ignore next */ window : global
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"client":13}],13:[function(require,module,exports){
-module.exports = typeof window != 'undefined'
-},{}],14:[function(require,module,exports){
-module.exports = { 
-  arr : toArray
+},{"utilise/owner":11,"utilise/to":13}],5:[function(require,module,exports){
+module.exports = function has(o, k) {
+  return k in o
 }
-
-function toArray(d){
-  return Array.prototype.slice.call(d, 0)
-}
-},{}],15:[function(require,module,exports){
-arguments[4][10][0].apply(exports,arguments)
-},{"dup":10}],16:[function(require,module,exports){
-var has = require('has')
+},{}],6:[function(require,module,exports){
+var has = require('utilise/has')
 
 module.exports = function header(header, value) {
   var getter = arguments.length == 1
@@ -188,9 +160,7 @@ module.exports = function header(header, value) {
                                    : d['headers'][header] == value
   }
 }
-},{"has":17}],17:[function(require,module,exports){
-arguments[4][10][0].apply(exports,arguments)
-},{"dup":10}],18:[function(require,module,exports){
+},{"utilise/has":5}],7:[function(require,module,exports){
 module.exports = is
 is.fn     = isFunction
 is.str    = isString
@@ -263,14 +233,14 @@ function isIn(set) {
          :  d in set
   }
 }
-},{}],19:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 module.exports = function keys(o) {
   return Object.keys(o || {})
 }
-},{}],20:[function(require,module,exports){
-var is = require('is')
-  , to = require('to')
-  , owner = require('owner')
+},{}],9:[function(require,module,exports){
+var is = require('utilise/is')
+  , to = require('utilise/to')
+  , owner = require('utilise/owner')
 
 module.exports = function log(prefix){
   return function(d){
@@ -281,22 +251,18 @@ module.exports = function log(prefix){
     return console.log.apply(console, args), d
   }
 }
-},{"is":21,"owner":22,"to":24}],21:[function(require,module,exports){
-arguments[4][18][0].apply(exports,arguments)
-},{"dup":18}],22:[function(require,module,exports){
-arguments[4][12][0].apply(exports,arguments)
-},{"client":23,"dup":12}],23:[function(require,module,exports){
-arguments[4][13][0].apply(exports,arguments)
-},{"dup":13}],24:[function(require,module,exports){
-arguments[4][14][0].apply(exports,arguments)
-},{"dup":14}],25:[function(require,module,exports){
+},{"utilise/is":7,"utilise/owner":11,"utilise/to":13}],10:[function(require,module,exports){
 module.exports = function not(fn){
   return function(){
     return !fn.apply(this, arguments)
   }
 }
-},{}],26:[function(require,module,exports){
-var is = require('is') 
+},{}],11:[function(require,module,exports){
+(function (global){
+module.exports = require('utilise/client') ? /* istanbul ignore next */ window : global
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"utilise/client":2}],12:[function(require,module,exports){
+var is = require('utilise/is') 
 
 module.exports = function str(d){
   return d === 0 ? '0'
@@ -305,10 +271,12 @@ module.exports = function str(d){
        : is.obj(d) ? JSON.stringify(d)
        : String(d)
 }
-},{"is":27}],27:[function(require,module,exports){
-arguments[4][18][0].apply(exports,arguments)
-},{"dup":18}],28:[function(require,module,exports){
-module.exports = require('not')
-},{"not":25}],29:[function(require,module,exports){
-module.exports = require('str')
-},{"str":26}]},{},[1]);
+},{"utilise/is":7}],13:[function(require,module,exports){
+module.exports = { 
+  arr : toArray
+}
+
+function toArray(d){
+  return Array.prototype.slice.call(d, 0)
+}
+},{}]},{},[1]);
