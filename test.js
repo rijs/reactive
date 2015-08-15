@@ -50,6 +50,25 @@ describe('Reactive Data', function() {
     })
   })
 
+  it('should add change details - load', function(done){  
+    var ripple = react(data(core()))
+    ripple.once('change', function(res, change){
+      expect(change).to.eql({ type: 'load' })
+
+      ripple('foo').once('change', function(foo, change){
+        expect(change.type).to.be.not.ok
+
+        ripple('foo').once('change', function(foo, change){
+          expect(change).to.be.not.ok
+          done()
+        })
+        ripple('foo').emit('change')
+      })
+      ripple('foo', ['foo'])
+    })
+    ripple('foo', ['foo'])
+  })
+
   it('should not duplicate observers', function(done){  
     var ripple = react(data(core()))
       , count = 0
