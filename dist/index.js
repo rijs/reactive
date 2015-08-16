@@ -71,7 +71,7 @@ function polyfill(ripple) {
   return function (res) {
     if (!ripple.observer) ripple.observer = setInterval(check(ripple), 100);
     if (!ripple.cache) ripple.cache = {};
-    if (!has(ripple.cache, res.name)) ripple.cache[res.name] = str(res.body);
+    ripple.cache[res.name] = str(res.body);
   };
 }
 
@@ -81,6 +81,7 @@ function check(ripple) {
     keys(ripple.cache).forEach(function (name) {
       var res = ripple.resources[name];
       if (ripple.cache[name] != str(res.body)) {
+        log("changed (x)", name);
         ripple.cache[name] = str(res.body);
         ripple.emit("change", [res], not(is["in"](["reactive"])));
       }

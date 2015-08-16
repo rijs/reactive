@@ -111,4 +111,19 @@ describe('Reactive Data', function() {
     }, 150)
   })
 
+  it('should not duplicate manual emits', function(done){  
+    var ripple = react(data(core()))
+      , count = 0
+
+    ripple('foo').on('change', function(){ count++ })
+    ripple('foo', ['foo']) 
+    ripple('foo', ['foo']) 
+    
+    setTimeout(function(){
+      console.log('count', count)
+      expect(count).to.eql(2)
+    }, 150)
+    setTimeout(done, 200)
+  })
+
 })
