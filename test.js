@@ -120,7 +120,6 @@ describe('Reactive Data', function() {
     ripple('foo', ['foo']) 
     
     setTimeout(function(){
-      console.log('count', count)
       expect(count).to.eql(2)
     }, 150)
     setTimeout(done, 200)

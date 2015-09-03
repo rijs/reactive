@@ -1,4 +1,5 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function (process){
 "use strict";
 
 /* istanbul ignore next */
@@ -48,7 +49,7 @@ function child(ripple) {
           type = "update",
           change = { key: key, value: value, type: type };
 
-      log("changed (c)".green, res.name.bold, str(key).grey);
+      log("changed (c)".green, res.name.bold, str(key).grey, debug ? changes : "");
       ripple.emit("change", [res, change], not(is["in"](["reactive"])));
     };
   };
@@ -60,7 +61,7 @@ function changed(ripple) {
       changes.map(normalize).filter(Boolean).map(function (change) {
         return (log("changed (p)".green, res.name.bold, change.key.grey), change);
       }).map(function (change) {
-        return (change.type == "push" && observe(ripple)(res)(change.value), change);
+        return (is.arr(res.body) && change.type == "push" && observe(ripple)(res)(change.value), change);
       }).map(function (change) {
         return ripple.emit("change", [res, change], not(is["in"](["reactive"])));
       });
@@ -109,6 +110,8 @@ function normalize(change) {
   }return details;
 }
 
+var debug = process.env.NODE_ENV == "DEBUG";
+
 var header = _interopRequire(require("utilise/header"));
 
 var keys = _interopRequire(require("utilise/keys"));
@@ -129,9 +132,70 @@ var is = _interopRequire(require("utilise/is"));
 
 log = log("[ri/reactive]");
 err = err("[ri/reactive]");
-},{"utilise/def":3,"utilise/err":4,"utilise/has":5,"utilise/header":6,"utilise/is":7,"utilise/keys":8,"utilise/log":9,"utilise/not":10,"utilise/str":12}],2:[function(require,module,exports){
-module.exports = typeof window != 'undefined'
+}).call(this,require('_process'))
+},{"_process":2,"utilise/def":4,"utilise/err":5,"utilise/has":6,"utilise/header":7,"utilise/is":8,"utilise/keys":9,"utilise/log":10,"utilise/not":11,"utilise/str":13}],2:[function(require,module,exports){
+// shim for using process in browser
+
+var process = module.exports = {};
+var queue = [];
+var draining = false;
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    draining = true;
+    var currentQueue;
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        var i = -1;
+        while (++i < len) {
+            currentQueue[i]();
+        }
+        len = queue.length;
+    }
+    draining = false;
+}
+process.nextTick = function (fun) {
+    queue.push(fun);
+    if (!draining) {
+        setTimeout(drainQueue, 0);
+    }
+};
+
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+// TODO(shtylman)
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
 },{}],3:[function(require,module,exports){
+module.exports = typeof window != 'undefined'
+},{}],4:[function(require,module,exports){
 var has = require('utilise/has')
 
 module.exports = function def(o, p, v, w){
@@ -139,7 +203,7 @@ module.exports = function def(o, p, v, w){
   return o[p]
 }
 
-},{"utilise/has":5}],4:[function(require,module,exports){
+},{"utilise/has":6}],5:[function(require,module,exports){
 var owner = require('utilise/owner')
   , to = require('utilise/to')
 
@@ -151,11 +215,11 @@ module.exports = function err(prefix){
     return console.error.apply(console, args), d
   }
 }
-},{"utilise/owner":11,"utilise/to":13}],5:[function(require,module,exports){
+},{"utilise/owner":12,"utilise/to":14}],6:[function(require,module,exports){
 module.exports = function has(o, k) {
   return k in o
 }
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 var has = require('utilise/has')
 
 module.exports = function header(header, value) {
@@ -168,7 +232,7 @@ module.exports = function header(header, value) {
                                    : d['headers'][header] == value
   }
 }
-},{"utilise/has":5}],7:[function(require,module,exports){
+},{"utilise/has":6}],8:[function(require,module,exports){
 module.exports = is
 is.fn     = isFunction
 is.str    = isString
@@ -236,16 +300,16 @@ function isDef(d) {
 
 function isIn(set) {
   return function(d){
-    return  set.indexOf 
-         ? ~set.indexOf(d)
-         :  d in set
+    return !set ? false  
+         : set.indexOf ? ~set.indexOf(d)
+         : d in set
   }
 }
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 module.exports = function keys(o) {
   return Object.keys(o || {})
 }
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 var is = require('utilise/is')
   , to = require('utilise/to')
   , owner = require('utilise/owner')
@@ -259,17 +323,17 @@ module.exports = function log(prefix){
     return console.log.apply(console, args), d
   }
 }
-},{"utilise/is":7,"utilise/owner":11,"utilise/to":13}],10:[function(require,module,exports){
+},{"utilise/is":8,"utilise/owner":12,"utilise/to":14}],11:[function(require,module,exports){
 module.exports = function not(fn){
   return function(){
     return !fn.apply(this, arguments)
   }
 }
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 (function (global){
 module.exports = require('utilise/client') ? /* istanbul ignore next */ window : global
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"utilise/client":2}],12:[function(require,module,exports){
+},{"utilise/client":3}],13:[function(require,module,exports){
 var is = require('utilise/is') 
 
 module.exports = function str(d){
@@ -279,7 +343,7 @@ module.exports = function str(d){
        : is.obj(d) ? JSON.stringify(d)
        : String(d)
 }
-},{"utilise/is":7}],13:[function(require,module,exports){
+},{"utilise/is":8}],14:[function(require,module,exports){
 module.exports = { 
   arr: toArray
 , obj: toObject

@@ -47,7 +47,7 @@ function child(ripple) {
           type = "update",
           change = { key: key, value: value, type: type };
 
-      log("changed (c)".green, res.name.bold, str(key).grey);
+      log("changed (c)".green, res.name.bold, str(key).grey, debug ? changes : "");
       ripple.emit("change", [res, change], not(is["in"](["reactive"])));
     };
   };
@@ -59,7 +59,7 @@ function changed(ripple) {
       changes.map(normalize).filter(Boolean).map(function (change) {
         return (log("changed (p)".green, res.name.bold, change.key.grey), change);
       }).map(function (change) {
-        return (change.type == "push" && observe(ripple)(res)(change.value), change);
+        return (is.arr(res.body) && change.type == "push" && observe(ripple)(res)(change.value), change);
       }).map(function (change) {
         return ripple.emit("change", [res, change], not(is["in"](["reactive"])));
       });
@@ -107,6 +107,8 @@ function normalize(change) {
     return (log("skipping update"), false);
   }return details;
 }
+
+var debug = process.env.NODE_ENV == "DEBUG";
 
 var header = _interopRequire(require("utilise/header"));
 

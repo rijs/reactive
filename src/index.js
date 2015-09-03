@@ -44,7 +44,7 @@ function child(ripple) {
         , type = 'update'
         , change = { key, value, type }
 
-      log('changed (c)'.green, res.name.bold, str(key).grey)
+      log('changed (c)'.green, res.name.bold, str(key).grey, debug ? changes : '')
       ripple.emit('change', [res, change], not(is.in(['reactive'])))
     }
   }
@@ -57,7 +57,7 @@ function changed(ripple) {
         .map(normalize)
         .filter(Boolean)
         .map(change => (log('changed (p)'.green, res.name.bold, change.key.grey), change))
-        .map(change => ((change.type == 'push' && observe(ripple)(res)(change.value)), change))
+        .map(change => ((is.arr(res.body) && change.type == 'push' && observe(ripple)(res)(change.value)), change))
         .map(change => ripple.emit('change', [res, change], not(is.in(['reactive']))))
     }
   }
@@ -109,6 +109,7 @@ function normalize(change) {
   return details
 }
 
+var debug = process.env.NODE_ENV == 'DEBUG'
 import header from 'utilise/header'
 import keys from 'utilise/keys'
 import str from 'utilise/str'
