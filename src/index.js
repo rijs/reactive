@@ -109,15 +109,13 @@ function normalize(change) {
   return details
 }
 
-var debug = process.env.NODE_ENV == 'DEBUG'
 import header from 'utilise/header'
 import keys from 'utilise/keys'
 import str from 'utilise/str'
 import not from 'utilise/not'
 import def from 'utilise/def'
-import err from 'utilise/err'
-import log from 'utilise/log'
 import has from 'utilise/has'
 import is from 'utilise/is'
-log = log('[ri/reactive]')
-err = err('[ri/reactive]')
+var log = require('utilise/log')('[ri/reactive]')
+  , err = require('utilise/err')('[ri/reactive]')
+  , debug = false
